@@ -9,86 +9,86 @@ sort_by = "weight"
 template = "docs/page.html"
 
 [extra]
-lead = "One page summary of how to start a new AdiDoks project."
+lead = "One page summary of how to start a new biliup project."
 toc = true
 top = false
 +++
 
 ## Requirements
 
-Before using the theme, you need to install the [Zola](https://www.getzola.org/documentation/getting-started/installation/) ≥ 0.15.0.
+Before using the biliup, you need to install the [python](https://www.python.org/) ≥ 3.8.
 
-## Run the Theme Directly
+## Run the biliup Directly
 
 ```bash
-git clone https://github.com/aaranxu/adidoks.git
-cd adidoks
-zola serve
+pipx install biliup
+biliup --http
 ```
 
-Visit `http://127.0.0.1:1111/` in the browser.
+Visit `http://127.0.0.1:19159/` in the browser.
 
 ## Installation
 
-Just earlier we showed you how to run the theme directly. Now we start to
-install the theme in an existing site step by step.
+Just earlier we showed you how to run the biliup directly. Now we start to
+install the biliup with config step by step.
 
-### Step 1: Create a new zola site
+### Step 1: Create a new directory
 
 ```bash
-zola init mysite
+mkdir biliup
+cd biliup
 ```
 
-### Step 2: Install AdiDoks
+### Step 2: Install biliup
 
-Download this theme to your themes directory:
+Download this theme to your PATH directory:
 
 ```bash
-cd mysite/themes
-git clone https://github.com/aaranxu/adidoks.git
+pip install biliup
 ```
 
-Or install as a submodule:
+Or install by docker:
 
 ```bash
-cd mysite
-git init  # if your project is a git repository already, ignore this command
-git submodule add https://github.com/aaranxu/adidoks.git themes/adidoks
+docker pull ghcr.io/biliup/caution:latest
 ```
 
 ### Step 3: Configuration
 
-Enable the theme in your `config.toml` in the site derectory:
+Create config in your `config.toml` in the biliup derectory:
 
 ```toml
-theme = "adidoks"
+# 以下为必填项
+[streamers."1xx直播录像"] # 设置直播间1
+url = ["https://www.twitch.tv/1xx"]
+tags = ["biliup"]
+
+# 设置直播间2
+[streamers."2xx直播录像"]
+url = ["https://www.twitch.tv/2xx"]
+tags = ["biliup"]   
 ```
 
-Or copy the `config.toml.example` from the theme directory to your project's
+Or use the `config.yaml` from the github directory to your project's
 root directory:
 
 ```bash
-cp themes/adidoks/config.toml.example config.toml
+vim config.yaml
 ```
 
-### Step 4: Add new content
+```yaml
+streamers:
+    xxx直播录像:
+        url:
+            - https://www.twitch.tv/xxx
+        tags: biliup
+```
 
-You can copy the content from the theme directory to your project:
+
+### Step 4: Run the project
+
+Just run `biliup start` in the root path of the project:
 
 ```bash
-cp -r themes/adidoks/content .
+biliup start
 ```
-
-You can modify or add new posts in the `content/blog`, `content/docs` or other
-content directories as needed.
-
-### Step 5: Run the project
-
-Just run `zola serve` in the root path of the project:
-
-```bash
-zola serve
-```
-
-AdiDoks will start the Zola development web server accessible by default at 
-`http://127.0.0.1:1111`. Saved changes will live reload in the browser.
